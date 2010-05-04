@@ -62,3 +62,4 @@ IF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/VisTrails/CMakeLists.txt)
   paraview_build_optional_plugin(VisTrailsPlugin "VisTrailsPlugin" VisTrails ON)
 ENDIF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/VisTrails/CMakeLists.txt)
 
+paraview_build_optional_plugin(YoungsMaterialInterfacePlugin "Youngs Material Interface" YoungsMaterialInterface OFF)
