@@ -160,7 +160,7 @@
 			   name="VolumeFractionRange"
 			   command="SetVolumeFractionRange"
 			   number_of_elements="2"
-			   default_values="0.01 254.99" >
+			   default_values="0.01 0.99" >
 	      <DoubleRangeDomain name="range" />
       </DoubleVectorProperty>
 
