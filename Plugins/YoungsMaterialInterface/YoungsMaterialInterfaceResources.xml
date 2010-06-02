@@ -1,79 +1,6 @@
 <ServerManagerConfiguration>
   <ProxyGroup name="filters">
 
-    <SourceProxy name="DataSetGradientPrecompute" class="vtkDataSetGradientPrecompute" label="Gradient Precomputation">
-	<InputProperty
-		    name="Input"
-		    command="SetInputConnection">
-	      <ProxyGroupDomain name="groups">
-		      <Group name="sources"/>
-		      <Group name="filters"/>
-	      </ProxyGroupDomain>
-	      <DataTypeDomain name="input_type">
-		      <DataType value="vtkDataSet"/>
-	      </DataTypeDomain>
-      </InputProperty>
-           <Documentation
-            short_help="This filter precomputes a geometry based vector field, that has to be applied prior to usage of vtkDataSetGradient."
-	    long_help="No scalars has to be specified, this filter precomputes values based on the mesh only, the vtkDataSetGradient then produces the gradient of a specific scalar field using these precomputed values ofr better performances">
-          </Documentation>
-   </SourceProxy>
-	
-   <SourceProxy name="DataSetGradient" class="vtkDataSetGradient" label="DataSet Gradient">
-      <Documentation
-	long_help="Computes the gradient of a specified cell or point scalar field. It works on arbitrary mesh topology composed of any cell types"
-	short_help="Scalar gradient computation for unstructured meshes">
-      </Documentation>
- 
-	    <InputProperty
-       name="Input"
-       command="SetInputConnection">
-          <ProxyGroupDomain name="groups">
-            <Group name="sources"/>
-            <Group name="filters"/>
-          </ProxyGroupDomain>
-          <DataTypeDomain name="input_type">
-            <DataType value="vtkDataSet"/>
-          </DataTypeDomain>
-        <InputArrayDomain name="input_array" attribute_type="any"
-                          number_of_components="1"/>
-     </InputProperty>
-
-     <StringVectorProperty 
-        name="SelectInputScalars" 
-        command="SetInputArrayToProcess"
-        number_of_elements="5"
-        element_types="0 0 0 0 2"
-        animateable="0"
-        label="Input Scalar Field">
-
-        <ArrayListDomain name="array_list" attribute_type="Scalars">
-            <RequiredProperties>
-               <Property name="Input" function="Input"/>
-            </RequiredProperties>
-          </ArrayListDomain>
-          <FieldDataDomain name="field_list">
-            <RequiredProperties>
-              <Property name="Input" function="Input" />
-            </RequiredProperties>
-          </FieldDataDomain>
-          <Documentation>
-            This property specifies the name of the scalar array to compute the gradient of.
-          </Documentation>
-     </StringVectorProperty>
-
-     <StringVectorProperty
-	name="Result array name"
-	command="SetResultArrayName"
-	number_of_elements="1"
-	default_values="gradient" >
-          <Documentation>
-            This property specifies the name of the resulting gradient array.
-          </Documentation>
-      </StringVectorProperty>
-      
-    </SourceProxy>
-
     <SourceProxy name="YoungsMaterialInterface" class="vtkYoungsMaterialInterface" label="Youngs material interface reconstruction">
       <Documentation
 		    long_help="Computes linear material interfaces in 2D or 3D mixed cells produced by eulerian or ALE simulation codes"
@@ -203,7 +130,6 @@
         name="Material" 
 	      label="Add Material"
         command="SetMaterialArrays"
-        clean_command="RemoveAllMaterials"
         number_of_elements_per_command="4" 
         repeat_command="1"
 	      element_types="0 2 2 2" >

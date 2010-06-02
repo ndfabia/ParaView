@@ -13,11 +13,6 @@ class pqYoungsMaterialInterfacePanel::pqImplementation
 {
 public:
   Ui::YoungsMaterialInterfacePanel UI;
-
-  QString volume;
-  QString normal;
-  QString order;
-
 };
 
 //-----------------------------------------------------------------------------
@@ -27,15 +22,6 @@ pqYoungsMaterialInterfacePanel::pqYoungsMaterialInterfacePanel (pqProxy* object_
 {
   this->Implementation->UI.setupUi (this);
 
-  QObject::connect (
-    this->Implementation->UI.volumeArray, SIGNAL(activated(const QString&)),
-    this, SLOT(setVolume(const QString&)));
-  QObject::connect (
-    this->Implementation->UI.normalArray, SIGNAL(activated(const QString&)),
-    this, SLOT(setNormal(const QString&)));
-  QObject::connect (
-    this->Implementation->UI.orderArray, SIGNAL(activated(const QString&)),
-    this, SLOT(setOrder(const QString&)));
   QObject::connect (
     this->Implementation->UI.addMaterial, SIGNAL(clicked()),
     this, SLOT(addMaterial()));
@@ -86,38 +72,29 @@ void pqYoungsMaterialInterfacePanel::accept ()
     QString volume = this->Implementation->UI.materials->item(i, 0)->text ();
     QString normal = this->Implementation->UI.materials->item(i, 1)->text ();
     QString order = this->Implementation->UI.materials->item(i, 2)->text ();
-    vtkSMPropertyHelper (proxy, "Material").Set (0, i);
-    vtkSMPropertyHelper (proxy, "Material").Set (1, volume.toAscii().data());
-    vtkSMPropertyHelper (proxy, "Material").Set (2, normal.toAscii().data());
-    vtkSMPropertyHelper (proxy, "Material").Set (3, order.toAscii().data());
+    vtkSMPropertyHelper (proxy, "Material").Set (i*4+0, i);
+    vtkSMPropertyHelper (proxy, "Material").Set (i*4+1, volume.toAscii().constData());
+    vtkSMPropertyHelper (proxy, "Material").Set (i*4+2, normal.toAscii().constData());
+    vtkSMPropertyHelper (proxy, "Material").Set (i*4+3, order.toAscii().constData());
     }
 
   proxy->UpdateVTKObjects ();
   Superclass::accept ();
 }
 
-void pqYoungsMaterialInterfacePanel::setVolume (const QString& text) 
-{ 
-  this->Implementation->volume = text; 
-}
-
-void pqYoungsMaterialInterfacePanel::setNormal (const QString& text) 
-{ 
-  this->Implementation->normal = text; 
-}
-
-void pqYoungsMaterialInterfacePanel::setOrder (const QString& text) 
-{ 
-  this->Implementation->order = text; 
-}
-
 void pqYoungsMaterialInterfacePanel::addMaterial ()
 {
   int count = this->Implementation->UI.materials->rowCount ();
-  this->Implementation->UI.materials->insertRow (count);
-  this->Implementation->UI.materials->setItem(count, 0, new QTableWidgetItem (this->Implementation->volume));
-  this->Implementation->UI.materials->setItem(count, 1, new QTableWidgetItem (this->Implementation->normal));
-  this->Implementation->UI.materials->setItem(count, 2, new QTableWidgetItem (this->Implementation->order));
+  this->Implementation->UI.materials->setRowCount( count + 1 );
+
+  QString volume = this->Implementation->UI.volumeArray->currentText();
+  QString normal = this->Implementation->UI.normalArray->currentText();
+  QString order = this->Implementation->UI.orderArray->currentText();
+
+  this->Implementation->UI.materials->setItem(count, 0, new QTableWidgetItem (volume));
+  this->Implementation->UI.materials->setItem(count, 1, new QTableWidgetItem (normal));
+  this->Implementation->UI.materials->setItem(count, 2, new QTableWidgetItem (order));
+  this->Implementation->UI.materials->resizeRowToContents(count);
 }
 
 void pqYoungsMaterialInterfacePanel::removeMaterial ()

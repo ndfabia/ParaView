@@ -2,6 +2,8 @@
 #define __pqYoungsMaterialInterfacePanel
 
 #include "pqObjectPanel.h"
+#include <vtkstd/vector>
+#include <vtkstd/string>
 
 class pqYoungsMaterialInterfacePanel : public pqObjectPanel
 {
@@ -15,9 +17,6 @@ public:
 
 private slots:
   virtual void accept ();
-  void setVolume (const QString&);
-  void setNormal (const QString&);
-  void setOrder (const QString&);
   void addMaterial ();
   void removeMaterial ();
 
