@@ -64,15 +64,21 @@ void pqYoungsMaterialInterfacePanel::accept ()
   vtkSMPropertyHelper (proxy, "AxisSymetric").Set (val);
   val = this->Implementation->UI.fillMaterial->checkState() == Qt::Checked;
   vtkSMPropertyHelper (proxy, "FillMaterial").Set (val);
+  val = this->Implementation->UI.invertNormals->checkState() == Qt::Checked;
+  vtkSMPropertyHelper (proxy, "InverseNormal").Set (val);
 
   int count = this->Implementation->UI.materials->rowCount ();
   vtkSMPropertyHelper (proxy, "NumberOfMaterials").Set (count);
+  // Update early to force the count set correctly
+  proxy->UpdateVTKObjects ();
+
   for (int i = 0; i < count; i ++)
     {
+    QString mat = QString::number (i);
     QString volume = this->Implementation->UI.materials->item(i, 0)->text ();
     QString normal = this->Implementation->UI.materials->item(i, 1)->text ();
     QString order = this->Implementation->UI.materials->item(i, 2)->text ();
-    vtkSMPropertyHelper (proxy, "Material").Set (i*4+0, i);
+    vtkSMPropertyHelper (proxy, "Material").Set (i*4+0, mat.toAscii().constData());
     vtkSMPropertyHelper (proxy, "Material").Set (i*4+1, volume.toAscii().constData());
     vtkSMPropertyHelper (proxy, "Material").Set (i*4+2, normal.toAscii().constData());
     vtkSMPropertyHelper (proxy, "Material").Set (i*4+3, order.toAscii().constData());

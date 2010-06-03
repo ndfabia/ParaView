@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>274</width>
-    <height>342</height>
+    <width>280</width>
+    <height>347</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -49,6 +49,13 @@
        </property>
        <property name="checked">
         <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="invertNormals">
+       <property name="text">
+        <string>Invert Normals</string>
        </property>
       </widget>
      </item>
@@ -194,6 +201,21 @@
      </attribute>
      <attribute name="verticalHeaderDefaultSectionSize">
       <number>50</number>
+     </attribute>
+     <attribute name="verticalHeaderStretchLastSection">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+      <bool>false</bool>
+     </attribute>
+     <attribute name="verticalHeaderDefaultSectionSize">
+      <number>50</number>
+     </attribute>
+     <attribute name="horizontalHeaderCascadingSectionResizes">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="verticalHeaderCascadingSectionResizes">
+      <bool>true</bool>
      </attribute>
      <attribute name="verticalHeaderStretchLastSection">
       <bool>true</bool>
